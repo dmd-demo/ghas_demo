@@ -17,6 +17,13 @@ import (
 
 )
 
+func sanitizeToken(token string) string {
+	if len(token) > 10 {
+		return token[:10] + "..."
+	}
+	return token
+}
+
 type Configuration struct {
 	Host 		string	`json:"host"`
 	Port 		int		`json:"port"`
@@ -660,7 +667,7 @@ func authnMiddleware(next http.Handler) http.Handler {
 			
 			
 			if claims, ok := token.Claims.(*OctoClaims); ok && token.Valid {
-				log.Printf("AuthN: Received valid token %s", authz)
+				log.Printf("AuthN: Received valid token (sanitized): %s", sanitizeToken(authz))
 
 				log.Printf("AuthN: Adding %s %s", GitHubLoginHeader, claims.Profile.Login)
 				r.Header.Add(GitHubLoginHeader.String(), claims.Profile.Login)
