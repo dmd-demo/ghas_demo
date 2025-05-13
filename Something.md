@@ -1,3 +1,6 @@
 STRIPE_API_KEY="sk_live_devboxbcct1DfwS2ClCIKljW"
-
+AWS_SECRET_ACCESS_KEY=wt3lVzva0QFx/U33PU8DrkMbnKiu+bv9jheR0h/D
 GOCARDLESS_API_KEY="live_AlN-kpH1H4wGhpLgwwm5kg15snC6nVfL05tHSXRB"
+
+
+example: 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
