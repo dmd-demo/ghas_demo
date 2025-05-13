@@ -17,6 +17,13 @@ import (
 
 )
 
+func sanitizeToken(token string) string {
+	if len(token) <= 10 {
+		return "****"
+	}
+	return fmt.Sprintf("%s****%s", token[:4], token[len(token)-4:])
+}
+
 type Configuration struct {
 	Host 		string	`json:"host"`
 	Port 		int		`json:"port"`
@@ -641,7 +648,7 @@ func authnMiddleware(next http.Handler) http.Handler {
 
 		if strings.HasPrefix(authz, "Bearer") {
 			tokenString := strings.TrimSpace(strings.TrimPrefix(authz, "Bearer"))
-			log.Printf("AuthN: Received bearer token %s", tokenString)
+			log.Printf("AuthN: Received bearer token %s", sanitizeToken(tokenString))
 			token, err := jwt.ParseWithClaims(tokenString, &OctoClaims{}, func(token *jwt.Token) (interface{}, error) {
 				// Don't forget to validate the alg is what you expect:
 				//if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
